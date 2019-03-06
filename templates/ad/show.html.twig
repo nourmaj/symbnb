@@ -18,15 +18,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mb-3">
-         {{ad.content| raw}}
+            {{ad.content| raw}}
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
+                    <ol class="carousel-indicators">
                    {% for image in ad.images %}
                     <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index0}}"
                     {% if loop.first %} class ="active" {% endif %}></li>
                    {% endfor %}
-                </ol>
-                <div class="carousel-inner">
+                    </ol>
+            <div class="carousel-inner">
                     {% for image in ad.images %}
                         <div class="carousel-item {% if loop.first %} active {% endif %}">
                              <img class="d-block w-100" src="{{image.url}}"  alt="first slide">
@@ -37,7 +37,7 @@
                         </div>
                     {% endfor %}
                    
-                </div>
+            </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -49,19 +49,17 @@
                 </div>
             </div>
         <div class="col">
-            <div class="row">
-                <div class="col-4">
-                    <img src="http://placehold.it/64x64" alt="">
+            {% set a = ad.author %}
+            <div class="row mb-3 align-items-center">
+                <div class="col-3">
+                  <a href="{{path('user_show',{'slug':a.slug})}}"> <img src="{{a.picture}}" class="avatar avatar-medium"  alt="{{a.fullName}}"></a> 
                 </div>
                 <div class="col">
-                    <h3> Joseph</h3>
-                    <span class="badge badge-primary">3 annonces</span>
+                        <a href="{{path('user_show',{'slug':a.slug})}}"> <h3> {{a.fullName}}</h3></a>
+                        <span class="badge badge-primary">{{a.ads | length}} annonces</span>
                 </div>
             </div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore rerum fuga placeat dolores inventore quaerat sint modi praesentium, sequi recusandae?</p>
-            <p>Eligendi blanditiis eaque quo soluta repellendus nam officiis placeat voluptatibus laboriosam temporibus quibusdam consequuntur ullam, ea eveniet ad quas commodi?</p>
-            <p>Vitae eaque saepe laboriosam voluptate, labore ipsam aspernatur sunt incidunt necessitatibus porro voluptates a. Quam possimus accusamus fugit nam doloremque!</p>
-
+              {{a.description | raw}}
         </div>
     </div>
 </div>
