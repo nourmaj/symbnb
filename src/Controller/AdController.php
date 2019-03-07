@@ -11,6 +11,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -32,6 +34,7 @@ class AdController extends AbstractController
      * permet de créer une annonce formulaire
      * 
      * @Route("/ads/new", name="ads_create")
+     * @IsGranted("ROLE_USER")
      * 
      * @return Response 
      */
@@ -86,7 +89,7 @@ class AdController extends AbstractController
      * permet d'afficher le form d'edition
      * 
      * @Route("/ads/{slug}/edit", name="ads_edit")
-     * 
+     * @Security("is_granted('ROLE_USER') and user ===ad.getAuthor()", message="cette annonce vous apparient pas ")
      * 
      */
    
@@ -143,5 +146,33 @@ class AdController extends AbstractController
         ]);
 
     }
+
+    /**
+     * supprimer une annonce 
+     *
+     * @Route("/ads/{slug}/delete", name="ads_delete")
+     * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()" , message="Interdit")
+     * 
+     * @param Ad $ad
+     * @param ObjectManager $manager
+     * @return Response
+     * 
+     */
+    public function delete(Ad $ad, ObjectManager $manager)
+    {
+
+        $manager->remove($ad);
+        $manager->flush();
+        
+        $this->addFlash( 
+            'success',
+            
+            "la suppresion d'annonce  <strong> {$ad->getTitle()}  </strong> ont bien été enregistrée ! "
+        );
+
+        return $this->redirectToRoute("ads_index");
+
+       
+    } 
    
 }
