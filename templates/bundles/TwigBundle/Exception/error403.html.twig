@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Frobidden{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1>Vous n'avez pas le droit </h1>
+
+      <div class="alert alert-danger">
+    
+     <p>C'est interdiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit</p>
+
+      <p>{{exception.message}}</p>
+    
+    </div>
+   <a href="{{path('homepage')}}" class="btn btn-primary">Retour à l'accueil </a>
+
+
+</div>
+{% endblock %}

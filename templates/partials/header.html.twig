@@ -27,6 +27,7 @@
                                 <a href="{{path('ads_create')}}" class="dropdown-item">Crée une annonce</a>
                                 <div class="dropdown-divider">Créer une annonce</div>
                                     <a href="{{path('account_index')}}" class="dropdown-item">Mon Compte</a>
+                                    <a href="{{path('account_bookings')}}" class="dropdown-item">Mes réservation</a>
                                     <a href="{{path('account_profile')}}" class="dropdown-item">Mdifier mon profil</a>
                                 
                                 
@@ -47,6 +48,8 @@
                     
                     </div>
 </nav>
+
+
 
         {% for label , messages in app.flashes %}
             <div class="container">
